@@ -32,5 +32,31 @@ login(username, password)
     .catch((err) => {
     console.log(`${ERR_MSG} : ${err.message}`);
 });
+// ---------------------------------------------------------------------------
+const DELAY_TIME = 1000;
+const RAINBOW_MSG = "RAINBOW OK!!";
+const derayedColorChange = (color, delay) => {
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {
+            document.body.style.backgroundColor = color;
+            resolve();
+        }, delay);
+    });
+};
+// 簡単のため色はマジックナンバーを使用
+const rainbow = () => __awaiter(void 0, void 0, void 0, function* () {
+    yield derayedColorChange("red", DELAY_TIME);
+    yield derayedColorChange("orange", DELAY_TIME);
+    yield derayedColorChange("yellow", DELAY_TIME);
+    yield derayedColorChange("green", DELAY_TIME);
+    yield derayedColorChange("blue", DELAY_TIME);
+    yield derayedColorChange("indigo", DELAY_TIME);
+    yield derayedColorChange("violet", DELAY_TIME);
+});
+const printRainbbow = () => __awaiter(void 0, void 0, void 0, function* () {
+    yield rainbow();
+    console.log(RAINBOW_MSG);
+});
 export {};
+// ---------------------------------------------------------------------------
 //# sourceMappingURL=app.js.map
