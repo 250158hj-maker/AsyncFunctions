@@ -22,6 +22,13 @@ const RESOLVE_MSG = "Success!";
 const DUMMY_DATA = "Dummy Data";
 const REJECT_MSG = "Connection Timeout";
 const RANDOM_JUDGE = 0.7;
+/**
+ * 簡易的なログイン処理
+ * フォーマットに正しく入力されているか、パスワードが正しいかの判定
+ * @param username
+ * @param password
+ * @returns resolve -> Welcome message, reject -> Error
+ */
 const login = (username, password) => __awaiter(void 0, void 0, void 0, function* () {
     if (!username || !password) {
         throw Error(FORMAT_ERR_MSG);
@@ -40,7 +47,12 @@ login(username, password)
     console.log(`${ERR_MSG} : ${err.message}`);
 });
 // ---------------------------------------------------------------------------
-// この関数はrejectされない
+/**
+ * background-colorの変更(遅延有)
+ * 使用上rejectにはならない
+ * @param color - 変更したい色
+ * @param delay - 遅延
+ */
 const derayedColorChange = (color, delay) => {
     return new Promise((resolve, reject) => {
         setTimeout(() => {
@@ -49,7 +61,10 @@ const derayedColorChange = (color, delay) => {
         }, delay);
     });
 };
-// 簡単のため色はマジックナンバーを使用
+/**
+ * background-colorを七色に変更
+ * 簡単のため色の指定はマジックナンバー
+ */
 const rainbow = () => __awaiter(void 0, void 0, void 0, function* () {
     yield derayedColorChange("red", DELAY_TIME);
     yield derayedColorChange("orange", DELAY_TIME);
@@ -59,12 +74,21 @@ const rainbow = () => __awaiter(void 0, void 0, void 0, function* () {
     yield derayedColorChange("indigo", DELAY_TIME);
     yield derayedColorChange("violet", DELAY_TIME);
 });
+/**
+ * background-colorが何色に変更された後メッセージを出力
+ */
 const printRainbbow = () => __awaiter(void 0, void 0, void 0, function* () {
     yield rainbow();
     console.log(RAINBOW_MSG);
 });
 printRainbbow();
 // ---------------------------------------------------------------------------
+/**
+ * URLリクエストのデモ。判定はランダム。
+ * URLに関係なく成功すればダミーデータを返す
+ * @param url - 情報送信先
+ * @returns resolve -> dummy data, reject -> Error message
+ */
 const fakeRequest = (url) => {
     return new Promise((resolve, reject) => {
         const rand = Math.random();
@@ -79,6 +103,9 @@ const fakeRequest = (url) => {
         }, DELAY_TIME);
     });
 };
+/**
+ * URLリクエストデモを実行。取得情報を出力
+ */
 const makeRequest = () => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const data1 = yield fakeRequest(REQUEST_URL);

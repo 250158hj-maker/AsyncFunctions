@@ -14,6 +14,13 @@ const DUMMY_DATA: string = "Dummy Data";
 const REJECT_MSG: string = "Connection Timeout";
 const RANDOM_JUDGE: number = 0.7;
 
+/**
+ * 簡易的なログイン処理
+ * フォーマットに正しく入力されているか、パスワードが正しいかの判定
+ * @param username
+ * @param password
+ * @returns resolve -> Welcome message, reject -> Error
+ */
 const login = async (
   username: string,
   password: string,
@@ -37,7 +44,13 @@ login(username, password)
   });
 
 // ---------------------------------------------------------------------------
-// この関数はrejectされない
+
+/**
+ * background-colorの変更(遅延有)
+ * 使用上rejectにはならない
+ * @param color - 変更したい色
+ * @param delay - 遅延
+ */
 const derayedColorChange = (color: string, delay: number): Promise<void> => {
   return new Promise((resolve: Function, reject?: Function) => {
     setTimeout(() => {
@@ -47,7 +60,10 @@ const derayedColorChange = (color: string, delay: number): Promise<void> => {
   });
 };
 
-// 簡単のため色はマジックナンバーを使用
+/**
+ * background-colorを七色に変更
+ * 簡単のため色の指定はマジックナンバー
+ */
 const rainbow = async (): Promise<void> => {
   await derayedColorChange("red", DELAY_TIME);
   await derayedColorChange("orange", DELAY_TIME);
@@ -58,6 +74,9 @@ const rainbow = async (): Promise<void> => {
   await derayedColorChange("violet", DELAY_TIME);
 };
 
+/**
+ * background-colorが何色に変更された後メッセージを出力
+ */
 const printRainbbow = async (): Promise<void> => {
   await rainbow();
   console.log(RAINBOW_MSG);
@@ -66,6 +85,13 @@ const printRainbbow = async (): Promise<void> => {
 printRainbbow();
 
 // ---------------------------------------------------------------------------
+
+/**
+ * URLリクエストのデモ。判定はランダム。
+ * URLに関係なく成功すればダミーデータを返す
+ * @param url - 情報送信先
+ * @returns resolve -> dummy data, reject -> Error message
+ */
 const fakeRequest = (url: string): Promise<string> => {
   return new Promise((resolve: Function, reject: Function) => {
     const rand: number = Math.random();
@@ -80,6 +106,9 @@ const fakeRequest = (url: string): Promise<string> => {
   });
 };
 
+/**
+ * URLリクエストデモを実行。取得情報を出力
+ */
 const makeRequest = async (): Promise<void> => {
   try {
     const data1 = await fakeRequest(REQUEST_URL);
