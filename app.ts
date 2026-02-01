@@ -6,6 +6,12 @@ const ERR_MSG = "Error";
 const WELCOME_MSG = "Welcome!!";
 const FORMAT_ERR_MSG = "情報を正しく入力してください";
 const PASSWORD_ERR_MSG = "パスワードが異なります";
+const DELAY_TIME = 1000;
+const RAINBOW_MSG = "RAINBOW OK!!";
+const REQUEST_URL: string = "google.com";
+const RESOLVE_MSG: string = "Dummy Data";
+const REJECT_MSG: string = "Connection Timeout";
+const RANDOM_JUDGE: number = 0.7;
 
 const login = async (
   username: string,
@@ -30,9 +36,6 @@ login(username, password)
   });
 
 // ---------------------------------------------------------------------------
-const DELAY_TIME = 1000;
-const RAINBOW_MSG = "RAINBOW OK!!";
-
 const derayedColorChange = (color: string, delay: number): Promise<unknown> => {
   return new Promise((resolve: Function, reject?: Function) => {
     setTimeout(() => {
@@ -58,5 +61,25 @@ const printRainbbow = async () => {
   console.log(RAINBOW_MSG);
 };
 
-// ---------------------------------------------------------------------------
+printRainbbow();
 
+// ---------------------------------------------------------------------------
+const fakeRequest = (url: string): Promise<string> => {
+  return new Promise((resolve: Function, reject: Function) => {
+    const rand: number = Math.random();
+    setTimeout(() => {
+      if (rand < RANDOM_JUDGE) {
+        resolve(`${RESOLVE_MSG} : ${url}`);
+      } else {
+        reject(RESOLVE_MSG);
+      }
+    }, DELAY_TIME);
+  });
+};
+
+const makeRequest = async () => {
+  const data = await fakeRequest(REQUEST_URL);
+  console.log(data);
+};
+
+makeRequest();

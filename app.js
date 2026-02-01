@@ -15,6 +15,12 @@ const ERR_MSG = "Error";
 const WELCOME_MSG = "Welcome!!";
 const FORMAT_ERR_MSG = "情報を正しく入力してください";
 const PASSWORD_ERR_MSG = "パスワードが異なります";
+const DELAY_TIME = 1000;
+const RAINBOW_MSG = "RAINBOW OK!!";
+const REQUEST_URL = "google.com";
+const RESOLVE_MSG = "Dummy Data";
+const REJECT_MSG = "Connection Timeout";
+const RANDOM_JUDGE = 0.7;
 const login = (username, password) => __awaiter(void 0, void 0, void 0, function* () {
     if (!username || !password) {
         throw Error(FORMAT_ERR_MSG);
@@ -33,8 +39,6 @@ login(username, password)
     console.log(`${ERR_MSG} : ${err.message}`);
 });
 // ---------------------------------------------------------------------------
-const DELAY_TIME = 1000;
-const RAINBOW_MSG = "RAINBOW OK!!";
 const derayedColorChange = (color, delay) => {
     return new Promise((resolve, reject) => {
         setTimeout(() => {
@@ -57,6 +61,25 @@ const printRainbbow = () => __awaiter(void 0, void 0, void 0, function* () {
     yield rainbow();
     console.log(RAINBOW_MSG);
 });
-export {};
+printRainbbow();
 // ---------------------------------------------------------------------------
+const fakeRequest = (url) => {
+    return new Promise((resolve, reject) => {
+        const rand = Math.random();
+        setTimeout(() => {
+            if (rand < RANDOM_JUDGE) {
+                resolve(`${RESOLVE_MSG} : ${url}`);
+            }
+            else {
+                reject(RESOLVE_MSG);
+            }
+        }, DELAY_TIME);
+    });
+};
+const makeRequest = () => __awaiter(void 0, void 0, void 0, function* () {
+    const data = yield fakeRequest(REQUEST_URL);
+    console.log(data);
+});
+makeRequest();
+export {};
 //# sourceMappingURL=app.js.map
