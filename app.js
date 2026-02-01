@@ -18,7 +18,8 @@ const PASSWORD_ERR_MSG = "パスワードが異なります";
 const DELAY_TIME = 1000;
 const RAINBOW_MSG = "RAINBOW OK!!";
 const REQUEST_URL = "google.com";
-const RESOLVE_MSG = "Dummy Data";
+const RESOLVE_MSG = "Success!";
+const DUMMY_DATA = "Dummy Data";
 const REJECT_MSG = "Connection Timeout";
 const RANDOM_JUDGE = 0.7;
 const login = (username, password) => __awaiter(void 0, void 0, void 0, function* () {
@@ -39,6 +40,7 @@ login(username, password)
     console.log(`${ERR_MSG} : ${err.message}`);
 });
 // ---------------------------------------------------------------------------
+// この関数はrejectされない
 const derayedColorChange = (color, delay) => {
     return new Promise((resolve, reject) => {
         setTimeout(() => {
@@ -68,17 +70,25 @@ const fakeRequest = (url) => {
         const rand = Math.random();
         setTimeout(() => {
             if (rand < RANDOM_JUDGE) {
-                resolve(`${RESOLVE_MSG} : ${url}`);
+                console.log(RESOLVE_MSG);
+                resolve(DUMMY_DATA);
             }
             else {
-                reject(RESOLVE_MSG);
+                reject(REJECT_MSG);
             }
         }, DELAY_TIME);
     });
 };
 const makeRequest = () => __awaiter(void 0, void 0, void 0, function* () {
-    const data = yield fakeRequest(REQUEST_URL);
-    console.log(data);
+    try {
+        const data1 = yield fakeRequest(REQUEST_URL);
+        console.log(`Data1 : ${data1}`);
+        const data2 = yield fakeRequest(REQUEST_URL);
+        console.log(`Data2 : ${data2}`);
+    }
+    catch (err) {
+        console.log(`${ERR_MSG} : ${err}`);
+    }
 });
 makeRequest();
 export {};

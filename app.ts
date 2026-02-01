@@ -9,7 +9,8 @@ const PASSWORD_ERR_MSG = "パスワードが異なります";
 const DELAY_TIME = 1000;
 const RAINBOW_MSG = "RAINBOW OK!!";
 const REQUEST_URL: string = "google.com";
-const RESOLVE_MSG: string = "Dummy Data";
+const RESOLVE_MSG: string = "Success!";
+const DUMMY_DATA: string = "Dummy Data";
 const REJECT_MSG: string = "Connection Timeout";
 const RANDOM_JUDGE: number = 0.7;
 
@@ -36,7 +37,8 @@ login(username, password)
   });
 
 // ---------------------------------------------------------------------------
-const derayedColorChange = (color: string, delay: number): Promise<unknown> => {
+// この関数はrejectされない
+const derayedColorChange = (color: string, delay: number): Promise<void> => {
   return new Promise((resolve: Function, reject?: Function) => {
     setTimeout(() => {
       document.body.style.backgroundColor = color;
@@ -46,7 +48,7 @@ const derayedColorChange = (color: string, delay: number): Promise<unknown> => {
 };
 
 // 簡単のため色はマジックナンバーを使用
-const rainbow = async () => {
+const rainbow = async (): Promise<void> => {
   await derayedColorChange("red", DELAY_TIME);
   await derayedColorChange("orange", DELAY_TIME);
   await derayedColorChange("yellow", DELAY_TIME);
@@ -56,7 +58,7 @@ const rainbow = async () => {
   await derayedColorChange("violet", DELAY_TIME);
 };
 
-const printRainbbow = async () => {
+const printRainbbow = async (): Promise<void> => {
   await rainbow();
   console.log(RAINBOW_MSG);
 };
@@ -69,17 +71,24 @@ const fakeRequest = (url: string): Promise<string> => {
     const rand: number = Math.random();
     setTimeout(() => {
       if (rand < RANDOM_JUDGE) {
-        resolve(`${RESOLVE_MSG} : ${url}`);
+        console.log(RESOLVE_MSG);
+        resolve(DUMMY_DATA);
       } else {
-        reject(RESOLVE_MSG);
+        reject(REJECT_MSG);
       }
     }, DELAY_TIME);
   });
 };
 
-const makeRequest = async () => {
-  const data = await fakeRequest(REQUEST_URL);
-  console.log(data);
+const makeRequest = async (): Promise<void> => {
+  try {
+    const data1 = await fakeRequest(REQUEST_URL);
+    console.log(`Data1 : ${data1}`);
+    const data2 = await fakeRequest(REQUEST_URL);
+    console.log(`Data2 : ${data2}`);
+  } catch (err) {
+    console.log(`${ERR_MSG} : ${err}`);
+  }
 };
 
 makeRequest();
